@@ -1,0 +1,86 @@
+
+.zones {
+  border-collapse: collapse;
+  position: relative;
+  table-layout: fixed;
+}
+
+.zones td {
+  border: none;
+  border-left: 1px dotted #4a757d;
+  padding: 0;
+  position: relative;
+  vertical-align: top;
+  break-word: word-wrap;
+}
+
+.wrap {
+	position: relative;
+}
+
+.slider {
+	background: url(crossBG2.png) left top repeat transparent;
+}
+
+.chooser td {
+	text-align: center;
+	vertical-align: middle;
+	height: 50px;
+	font-family : "PT Sans Narrow", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #4a757d;
+}
+
+.offset-label {
+	text-align: center;
+}
+
+#slider-range {
+  height: 800px;
+  background-color: #dcf3f3;
+}
+
+.ui-slider-vertical {
+	width: 100%;
+	border: none;
+	border-radius: 0;
+}
+
+.ui-slider .ui-slider-handle {
+	height: 4px;
+	width: 100%;
+	border: none;
+	border-radius: 0;
+	left: 0;
+	margin-bottom: -2px;
+	background-color: #4a757d;
+}
+
+.ui-widget-header {
+	background-color: #31c8e3;
+}
+
+#all-range {
+	position: absolute;
+	left: 0;
+	background-color: #31c8e3;
+	border-top: 1px solid #4a757d;
+	border-bottom: 1px solid #4a757d;
+	padding: 0;
+	margin: 0;
+	opacity: 0.3;
+}
+
+.time-slides-tooltips {
+	position: absolute;
+	display: block;
+	text-align: center;
+	z-index: 10;
+	padding: 0;
+	font-family: 'Arial', sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 100%;
+	color: #4a757d;
+}

@@ -3,10 +3,10 @@
   <head>
     <title>Time zones</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/jquery-ui.css" />
-    <link rel="stylesheet" href="/tz-style.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.css" />
+    <link rel="stylesheet" href="tz-style.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
     <script >
       $(function() {
         var $all_range = $('#all-range')
@@ -78,6 +78,7 @@
         }
 
         var getUTCoffset = function (position, cb) {
+          
           $.ajax({
             type : "GET",
             url : "http://api.geonames.org/timezoneJSON",

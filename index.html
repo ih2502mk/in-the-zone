@@ -129,6 +129,8 @@
 
           var $initial_slide_tooltips = $slide_tooltips.clone();
 
+          $('.chooser .utc-offset-' + offset).find('input').attr('disabled', 'disabled');
+
           $(".chooser").on('change', 'input', function(e){
 
             var chosen_offset = parseInt($(this).attr('name').replace("utc-", ""));

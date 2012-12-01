@@ -16,8 +16,7 @@
             .add('<span class="time-slides-tooltips bottom" />');
 
         $(window).on('resize', function (){
-          $all_range.width($('table.zones').width());  
-          $slide_tooltips.width($('td').width());
+          $all_range.width($('table.zones').width());
         })
 
         var all_range_reposition = function (top, height) {
@@ -36,16 +35,28 @@
         }
 
         var tooltip_values = function(val_top, val_bottom) {
+          if(!arguments.length) {
+            var current_values = $widget.slider("option", "values");
+            val_top = current_values[1];
+            val_bottom = current_values[0];
+          }
           
-          var convert = function (half_hours) {
-            var hrs = parseInt(Math.floor(half_hours / 2))
+          var convert = function (half_hours, offset) {
+            var hrs = parseInt(Math.floor(half_hours / 2) + offset)
               , mins = (half_hours % 2) ? "30" : "00";
             
+            hrs = (hrs < 0) ? 24 + hrs : hrs;
+            hrs = (hrs > 24) ? hrs - 24 : hrs;
+
             return hrs + ":" + mins;
           }
 
-          $slide_tooltips.filter(".top").text(convert(val_top));
-          $slide_tooltips.filter(".bottom").text(convert(val_bottom));          
+          $slide_tooltips.filter(".top").each(function(){
+            $(this).text(convert(val_top, $(this).data("relative-offset")));
+          });
+          $slide_tooltips.filter(".bottom").each(function(){
+            $(this).text(convert(val_bottom, $(this).data("relative-offset")));
+          });
         }
 
         var create_slider = function ($element) {
@@ -103,19 +114,35 @@
         }
 
         var initWidgets = function (offset) {
+          $all_range.width($('table.zones').width());
+
           var $tz = $('.slider .utc-offset-' + offset).append('<div class="wrap">');
           $tz = $tz.find('.wrap');
 
-          $tz.append($widget).append($slide_tooltips);
+          $tz
+            .append($widget)
+            .append($slide_tooltips);
+          
+          $slide_tooltips.data({"relative-offset" : 0});
+          
           create_slider($widget);
-          $all_range.width($('table.zones').width());  
-          $slide_tooltips.width($('td').width());
+
+          var $initial_slide_tooltips = $slide_tooltips.clone();
 
           $(".chooser").on('change', 'input', function(e){
+
             var chosen_offset = parseInt($(this).attr('name').replace("utc-", ""));
+            
+            $('.slider .utc-offset-' + chosen_offset).toggleClass('chosen');
+
             if ($(this).is(":checked")) {
-              $slide_tooltips.clone().appendTo('.slider .utc-offset-' + chosen_offset);
-              $slide_tooltips = $('.time-slides-tooltips');
+              $new_slide_tooltips = $initial_slide_tooltips.clone();
+              $new_slide_tooltips.data({"relative-offset" : chosen_offset - offset})
+              $new_slide_tooltips.appendTo('.slider .utc-offset-' + chosen_offset);
+              $slide_tooltips = $slide_tooltips.add($new_slide_tooltips);
+              
+              tooltip_values();
+              all_range_reposition();
             }
             else {
               $('.slider .utc-offset-' + chosen_offset).find('.time-slides-tooltips').remove();

@@ -22,6 +22,10 @@
 	background: url(crossBG2.png) left top repeat transparent;
 }
 
+.slider .chosen {
+	background-color: #dcf3f3;
+}
+
 .chooser td {
 	text-align: center;
 	vertical-align: middle;
@@ -70,6 +74,7 @@
 	padding: 0;
 	margin: 0;
 	opacity: 0.3;
+	z-index: 1;
 }
 
 .time-slides-tooltips {
@@ -83,4 +88,5 @@
 	font-size: 12px;
 	line-height: 100%;
 	color: #4a757d;
+	width: 100%;
 }

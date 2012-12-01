@@ -116,7 +116,7 @@
         var initWidgets = function (offset) {
           $all_range.width($('table.zones').width());
 
-          var $tz = $('.slider .utc-offset-' + offset).append('<div class="wrap">');
+          var $tz = $('.slider .utc-offset-' + offset);
           $tz = $tz.find('.wrap');
 
           $tz
@@ -140,7 +140,7 @@
             if ($(this).is(":checked")) {
               $new_slide_tooltips = $initial_slide_tooltips.clone();
               $new_slide_tooltips.data({"relative-offset" : chosen_offset - offset})
-              $new_slide_tooltips.appendTo('.slider .utc-offset-' + chosen_offset);
+              $new_slide_tooltips.appendTo('.slider .utc-offset-' + chosen_offset + " .wrap");
               $slide_tooltips = $slide_tooltips.add($new_slide_tooltips);
               
               tooltip_values();
@@ -211,29 +211,29 @@
               <div id="all-range"></div>
             </div>
           </td>
-          <td class="utc-offset--10"></td>
-          <td class="utc-offset--9"></td>
-          <td class="utc-offset--8"></td>
-          <td class="utc-offset--7"></td>
-          <td class="utc-offset--6"></td>
-          <td class="utc-offset--5"></td>
-          <td class="utc-offset--4"></td>
-          <td class="utc-offset--3"></td>
-          <td class="utc-offset--2"></td>
-          <td class="utc-offset--1"></td>
-          <td class="utc-offset-0"></td>
-          <td class="utc-offset-1"></td>
-          <td class="utc-offset-2"></td>
-          <td class="utc-offset-3"></td>
-          <td class="utc-offset-4"></td>
-          <td class="utc-offset-5"></td>
-          <td class="utc-offset-6"></td>
-          <td class="utc-offset-7"></td>
-          <td class="utc-offset-8"></td>
-          <td class="utc-offset-9"></td>
-          <td class="utc-offset-10"></td>
-          <td class="utc-offset-11"></td>
-          <td class="utc-offset-12 last"></td>
+          <td class="utc-offset--10"><div class="wrap"></div></td>
+          <td class="utc-offset--9"><div class="wrap"></div></td>
+          <td class="utc-offset--8"><div class="wrap"></div></td>
+          <td class="utc-offset--7"><div class="wrap"></div></td>
+          <td class="utc-offset--6"><div class="wrap"></div></td>
+          <td class="utc-offset--5"><div class="wrap"></div></td>
+          <td class="utc-offset--4"><div class="wrap"></div></td>
+          <td class="utc-offset--3"><div class="wrap"></div></td>
+          <td class="utc-offset--2"><div class="wrap"></div></td>
+          <td class="utc-offset--1"><div class="wrap"></div></td>
+          <td class="utc-offset-0"><div class="wrap"></div></td>
+          <td class="utc-offset-1"><div class="wrap"></div></td>
+          <td class="utc-offset-2"><div class="wrap"></div></td>
+          <td class="utc-offset-3"><div class="wrap"></div></td>
+          <td class="utc-offset-4"><div class="wrap"></div></td>
+          <td class="utc-offset-5"><div class="wrap"></div></td>
+          <td class="utc-offset-6"><div class="wrap"></div></td>
+          <td class="utc-offset-7"><div class="wrap"></div></td>
+          <td class="utc-offset-8"><div class="wrap"></div></td>
+          <td class="utc-offset-9"><div class="wrap"></div></td>
+          <td class="utc-offset-10"><div class="wrap"></div></td>
+          <td class="utc-offset-11"><div class="wrap"></div></td>
+          <td class="utc-offset-12 last"><div class="wrap"></div></td>
         </tr>
 
       </tbody>

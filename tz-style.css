@@ -1,4 +1,12 @@
 
+html {
+	overflow-y: scroll;
+}
+
+body {
+	margin: 5px;
+}
+
 .zones {
   border-collapse: collapse;
   position: relative;
@@ -12,6 +20,10 @@
   position: relative;
   vertical-align: top;
   break-word: word-wrap;
+}
+
+.zones td.last {
+	border-right: 1px dotted #4a757d;
 }
 
 .wrap {
@@ -41,7 +53,6 @@
 }
 
 #slider-range {
-  height: 800px;
   background-color: #dcf3f3;
 }
 

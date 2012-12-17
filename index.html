@@ -124,6 +124,11 @@
             .append($slide_tooltips);
           
           $slide_tooltips.data({"relative-offset" : 0});
+
+          $widget.height(Math.max(
+            $(document).height(),   
+            $(window).height(),          
+            document.documentElement.clientHeight) - 60);
           
           create_slider($widget);
 
@@ -180,29 +185,29 @@
             <div>-11</div>
             <input type="checkbox" name="utc--11">
           </td>
-          <td class="utc-offset--10"><div class="offset-label">-10</div><input type="checkbox" name="utc--10"></td>
-          <td class="utc-offset--9"><div class="offset-label">-9</div><input type="checkbox" name="utc--9"></td>
-          <td class="utc-offset--8"><div class="offset-label">-8</div><input type="checkbox" name="utc--8"></td>
-          <td class="utc-offset--7"><div class="offset-label">-7</div><input type="checkbox" name="utc--7"></td>
-          <td class="utc-offset--6"><div class="offset-label">-6</div><input type="checkbox" name="utc--6"></td>
-          <td class="utc-offset--5"><div class="offset-label">-5</div><input type="checkbox" name="utc--5"></td>
-          <td class="utc-offset--4"><div class="offset-label">-4</div><input type="checkbox" name="utc--4"></td>
-          <td class="utc-offset--3"><div class="offset-label">-3</div><input type="checkbox" name="utc--3"></td>
-          <td class="utc-offset--2"><div class="offset-label">-2</div><input type="checkbox" name="utc--2"></td>
-          <td class="utc-offset--1"><div class="offset-label">-1</div><input type="checkbox" name="utc--1"></td>
-          <td class="utc-offset-0"><div class="offset-label">UTC</div><input type="checkbox" name="utc-0"></td>
-          <td class="utc-offset-1"><div class="offset-label">+1</div><input type="checkbox" name="utc-1"></td>
-          <td class="utc-offset-2"><div class="offset-label">+2</div><input type="checkbox" name="utc-2"></td>
-          <td class="utc-offset-3"><div class="offset-label">+3</div><input type="checkbox" name="utc-3"></td>
-          <td class="utc-offset-4"><div class="offset-label">+4</div><input type="checkbox" name="utc-4"></td>
-          <td class="utc-offset-5"><div class="offset-label">+5</div><input type="checkbox" name="utc-5"></td>
-          <td class="utc-offset-6"><div class="offset-label">+6</div><input type="checkbox" name="utc-6"></td>
-          <td class="utc-offset-7"><div class="offset-label">+7</div><input type="checkbox" name="utc-7"></td>
-          <td class="utc-offset-8"><div class="offset-label">+8</div><input type="checkbox" name="utc-8"></td>
-          <td class="utc-offset-9"><div class="offset-label">+9</div><input type="checkbox" name="utc-9"></td>
-          <td class="utc-offset-10"><div class="offset-label">+10</div><input type="checkbox" name="utc-10"></td>
-          <td class="utc-offset-11"><div class="offset-label">+11</div><input type="checkbox" name="utc-11"></td>
-          <td class="utc-offset-12 last"><div class="offset-label">+12</div><input type="checkbox" name="utc-12"></td>
+          <td class="utc-offset--10">     <div class="offset-label">-10</div> <input type="checkbox" name="utc--10"> </td>
+          <td class="utc-offset--9">      <div class="offset-label">-9</div>  <input type="checkbox" name="utc--9">  </td>
+          <td class="utc-offset--8">      <div class="offset-label">-8</div>  <input type="checkbox" name="utc--8">  </td>
+          <td class="utc-offset--7">      <div class="offset-label">-7</div>  <input type="checkbox" name="utc--7">  </td>
+          <td class="utc-offset--6">      <div class="offset-label">-6</div>  <input type="checkbox" name="utc--6">  </td>
+          <td class="utc-offset--5">      <div class="offset-label">-5</div>  <input type="checkbox" name="utc--5">  </td>
+          <td class="utc-offset--4">      <div class="offset-label">-4</div>  <input type="checkbox" name="utc--4">  </td>
+          <td class="utc-offset--3">      <div class="offset-label">-3</div>  <input type="checkbox" name="utc--3">  </td>
+          <td class="utc-offset--2">      <div class="offset-label">-2</div>  <input type="checkbox" name="utc--2">  </td>
+          <td class="utc-offset--1">      <div class="offset-label">-1</div>  <input type="checkbox" name="utc--1">  </td>
+          <td class="utc-offset-0">       <div class="offset-label">UTC</div> <input type="checkbox" name="utc-0">   </td>
+          <td class="utc-offset-1">       <div class="offset-label">+1</div>  <input type="checkbox" name="utc-1">   </td>
+          <td class="utc-offset-2">       <div class="offset-label">+2</div>  <input type="checkbox" name="utc-2">   </td>
+          <td class="utc-offset-3">       <div class="offset-label">+3</div>  <input type="checkbox" name="utc-3">   </td>
+          <td class="utc-offset-4">       <div class="offset-label">+4</div>  <input type="checkbox" name="utc-4">   </td>
+          <td class="utc-offset-5">       <div class="offset-label">+5</div>  <input type="checkbox" name="utc-5">   </td>
+          <td class="utc-offset-6">       <div class="offset-label">+6</div>  <input type="checkbox" name="utc-6">   </td>
+          <td class="utc-offset-7">       <div class="offset-label">+7</div>  <input type="checkbox" name="utc-7">   </td>
+          <td class="utc-offset-8">       <div class="offset-label">+8</div>  <input type="checkbox" name="utc-8">   </td>
+          <td class="utc-offset-9">       <div class="offset-label">+9</div>  <input type="checkbox" name="utc-9">   </td>
+          <td class="utc-offset-10">      <div class="offset-label">+10</div> <input type="checkbox" name="utc-10">  </td>
+          <td class="utc-offset-11">      <div class="offset-label">+11</div> <input type="checkbox" name="utc-11">  </td>
+          <td class="utc-offset-12 last"> <div class="offset-label">+12</div> <input type="checkbox" name="utc-12">  </td>
         </tr>
         
         <tr class="slider">
@@ -211,30 +216,30 @@
               <div id="all-range"></div>
             </div>
           </td>
-          <td class="utc-offset--10"><div class="wrap"></div></td>
-          <td class="utc-offset--9"><div class="wrap"></div></td>
-          <td class="utc-offset--8"><div class="wrap"></div></td>
-          <td class="utc-offset--7"><div class="wrap"></div></td>
-          <td class="utc-offset--6"><div class="wrap"></div></td>
-          <td class="utc-offset--5"><div class="wrap"></div></td>
-          <td class="utc-offset--4"><div class="wrap"></div></td>
-          <td class="utc-offset--3"><div class="wrap"></div></td>
-          <td class="utc-offset--2"><div class="wrap"></div></td>
-          <td class="utc-offset--1"><div class="wrap"></div></td>
-          <td class="utc-offset-0"><div class="wrap"></div></td>
-          <td class="utc-offset-1"><div class="wrap"></div></td>
-          <td class="utc-offset-2"><div class="wrap"></div></td>
-          <td class="utc-offset-3"><div class="wrap"></div></td>
-          <td class="utc-offset-4"><div class="wrap"></div></td>
-          <td class="utc-offset-5"><div class="wrap"></div></td>
-          <td class="utc-offset-6"><div class="wrap"></div></td>
-          <td class="utc-offset-7"><div class="wrap"></div></td>
-          <td class="utc-offset-8"><div class="wrap"></div></td>
-          <td class="utc-offset-9"><div class="wrap"></div></td>
-          <td class="utc-offset-10"><div class="wrap"></div></td>
-          <td class="utc-offset-11"><div class="wrap"></div></td>
-          <td class="utc-offset-12 last"><div class="wrap"></div></td>
-        </tr>
+          <td class="utc-offset--10">     <div class="wrap"></div>  </td>
+          <td class="utc-offset--9">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--8">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--7">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--6">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--5">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--4">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--3">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--2">      <div class="wrap"></div>  </td>
+          <td class="utc-offset--1">      <div class="wrap"></div>  </td>
+          <td class="utc-offset-0">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-1">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-2">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-3">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-4">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-5">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-6">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-7">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-8">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-9">       <div class="wrap"></div>  </td>
+          <td class="utc-offset-10">      <div class="wrap"></div>  </td>
+          <td class="utc-offset-11">      <div class="wrap"></div>  </td>
+          <td class="utc-offset-12 last"> <div class="wrap"></div>  </td>
+        </tr>  
 
       </tbody>
     </table>

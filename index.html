@@ -9,27 +9,22 @@
       
   </head>
   <body>
-      
-
-    
+   
     <table ng-controller="TimeZoneController" class="zones" width="100%">
       <tbody>
         <tr class="chooser">
-          <td class="utc-offset--11 first"> <div class="offset-label" >-11</div> <input type="checkbox" name="utc--11"> </td>
-          <!-- 
-
-          ... 
-
-          -->
+          <td ng-repeat="timeZone in timeZones"> 
+            <div class="offset-label" >{{timeZone["utc-offset"]}}</div> 
+            <input type="checkbox" ng-model='timeZone["active"]' />
+          </td>
         </tr>
         
         <tr class="slider">
-          <td class="utc-offset--11 first"> <div class="wrap"> <div id="all-range"></div> </div> </td>
-          <!-- 
-
-          ... 
-
-          -->
+          <td ng-repeat="timeZone in timeZones" class='{{timeZone["active"]}}' > 
+            <div class="wrap"> 
+               
+            </div> 
+          </td>
         </tr>
 
       </tbody>

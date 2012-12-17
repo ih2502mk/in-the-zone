@@ -1,239 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html ng-app >
   <head>
     <title>Time zones</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="jquery-ui.css" />
     <link rel="stylesheet" href="tz-style.css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    <script >
-      $(function() {
-        var $all_range = $('#all-range')
-          , $widget = $('<div id="slider-range" />')
-          , $range = $([])
-          , $slide_tooltips = $('<span class="time-slides-tooltips top" />')
-            .add('<span class="time-slides-tooltips bottom" />');
-
-        $(window).on('resize', function (){
-          $all_range.width($('table.zones').width());
-        })
-
-        var all_range_reposition = function (top, height) {
-          if (!arguments.length) {
-            top = $range.position().top;
-            height = $range.height();
-          }
-
-          $all_range.css("top" , top + "px");
-          $all_range.height((height - 2) + "px");
-          
-          $slide_tooltips.filter(".top")
-            .css("top", (top + 5 ) + "px");
-          $slide_tooltips.filter(".bottom")
-            .css("top", (top + height - 17 ) + "px");
-        }
-
-        var tooltip_values = function(val_top, val_bottom) {
-          if(!arguments.length) {
-            var current_values = $widget.slider("option", "values");
-            val_top = current_values[1];
-            val_bottom = current_values[0];
-          }
-          
-          var convert = function (half_hours, offset) {
-            var hrs = parseInt(Math.floor(half_hours / 2) + offset)
-              , mins = (half_hours % 2) ? "30" : "00";
-            
-            hrs = (hrs < 0) ? 24 + hrs : hrs;
-            hrs = (hrs > 24) ? hrs - 24 : hrs;
-
-            return hrs + ":" + mins;
-          }
-
-          $slide_tooltips.filter(".top").each(function(){
-            $(this).text(convert(val_top, $(this).data("relative-offset")));
-          });
-          $slide_tooltips.filter(".bottom").each(function(){
-            $(this).text(convert(val_bottom, $(this).data("relative-offset")));
-          });
-        }
-
-        var create_slider = function ($element) {
-          $element.slider({
-            orientation: "vertical",
-            range: true,
-            min: 0,
-            max: 48,
-            values: [ 5, 30 ],
-            create: function( event, ui ) {
-              $widget = $(this);
-              $range = $widget.find("div.ui-slider-range");            
-
-              all_range_reposition();
-              tooltip_values(30, 5);
-            },
-            slide: function( event, ui ) {
-                    
-              var top = (48 - ui.values[1]) / 48 * $(this).height();
-              var height = (ui.values[1] - ui.values[0]) / 48 * $(this).height();
-              
-              all_range_reposition(top, height);
-              tooltip_values(ui.values[1], ui.values[0]);
-            },
-            change: function( event, ui ) {
-              all_range_reposition();
-              tooltip_values(ui.values[1], ui.values[0]);
-            }
-          });
-        }
-
-        var getUTCoffset = function (position, cb) {
-          
-          $.ajax({
-            type : "GET",
-            url : "http://api.geonames.org/timezoneJSON",
-            dataType : "jsonp",
-            data : {
-              "lat" : position.coords.latitude,
-              "lng" : position.coords.longitude,
-              "username" : "ih2502mk"
-            },
-            success : function( res ) {
-              if (res.rawOffset) {
-                cb (res.rawOffset);
-              }
-              else {
-                askUTCOffset(cb);
-              }
-            },
-            error : function () {
-              askUTCOffset(cb);
-            }
-          });
-        }
-
-        var initWidgets = function (offset) {
-          $all_range.width($('table.zones').width());
-
-          var $tz = $('.slider .utc-offset-' + offset);
-          $tz = $tz.find('.wrap');
-
-          $tz
-            .append($widget)
-            .append($slide_tooltips);
-          
-          $slide_tooltips.data({"relative-offset" : 0});
-          
-          create_slider($widget);
-
-          var $initial_slide_tooltips = $slide_tooltips.clone();
-
-          $('.chooser .utc-offset-' + offset).find('input').attr('disabled', 'disabled');
-
-          $(".chooser").on('change', 'input', function(e){
-
-            var chosen_offset = parseInt($(this).attr('name').replace("utc-", ""));
-            
-            $('.slider .utc-offset-' + chosen_offset).toggleClass('chosen');
-
-            if ($(this).is(":checked")) {
-              $new_slide_tooltips = $initial_slide_tooltips.clone();
-              $new_slide_tooltips.data({"relative-offset" : chosen_offset - offset})
-              $new_slide_tooltips.appendTo('.slider .utc-offset-' + chosen_offset + " .wrap");
-              $slide_tooltips = $slide_tooltips.add($new_slide_tooltips);
-              
-              tooltip_values();
-              all_range_reposition();
-            }
-            else {
-              $('.slider .utc-offset-' + chosen_offset).find('.time-slides-tooltips').remove();
-            }
-          });
-        }
-
-        var askUTCOffset = function(cb) {
-          cb(0);
-        }
-
-        if(navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            getUTCoffset(position, initWidgets);
-          }, 
-          function() {askUTCOffset(initWidgets)});  
-        } 
-        else {
-          askUTCOffset(initWidgets);
-        }
-    });
-
-    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="script.js"></script>
+      
   </head>
   <body>
       
 
     
-    <table class="zones" width="100%">
+    <table ng-controller="TimeZoneController" class="zones" width="100%">
       <tbody>
         <tr class="chooser">
-          <td class="utc-offset--11 first">
-            <div>-11</div>
-            <input type="checkbox" name="utc--11">
-          </td>
-          <td class="utc-offset--10"><div class="offset-label">-10</div><input type="checkbox" name="utc--10"></td>
-          <td class="utc-offset--9"><div class="offset-label">-9</div><input type="checkbox" name="utc--9"></td>
-          <td class="utc-offset--8"><div class="offset-label">-8</div><input type="checkbox" name="utc--8"></td>
-          <td class="utc-offset--7"><div class="offset-label">-7</div><input type="checkbox" name="utc--7"></td>
-          <td class="utc-offset--6"><div class="offset-label">-6</div><input type="checkbox" name="utc--6"></td>
-          <td class="utc-offset--5"><div class="offset-label">-5</div><input type="checkbox" name="utc--5"></td>
-          <td class="utc-offset--4"><div class="offset-label">-4</div><input type="checkbox" name="utc--4"></td>
-          <td class="utc-offset--3"><div class="offset-label">-3</div><input type="checkbox" name="utc--3"></td>
-          <td class="utc-offset--2"><div class="offset-label">-2</div><input type="checkbox" name="utc--2"></td>
-          <td class="utc-offset--1"><div class="offset-label">-1</div><input type="checkbox" name="utc--1"></td>
-          <td class="utc-offset-0"><div class="offset-label">UTC</div><input type="checkbox" name="utc-0"></td>
-          <td class="utc-offset-1"><div class="offset-label">+1</div><input type="checkbox" name="utc-1"></td>
-          <td class="utc-offset-2"><div class="offset-label">+2</div><input type="checkbox" name="utc-2"></td>
-          <td class="utc-offset-3"><div class="offset-label">+3</div><input type="checkbox" name="utc-3"></td>
-          <td class="utc-offset-4"><div class="offset-label">+4</div><input type="checkbox" name="utc-4"></td>
-          <td class="utc-offset-5"><div class="offset-label">+5</div><input type="checkbox" name="utc-5"></td>
-          <td class="utc-offset-6"><div class="offset-label">+6</div><input type="checkbox" name="utc-6"></td>
-          <td class="utc-offset-7"><div class="offset-label">+7</div><input type="checkbox" name="utc-7"></td>
-          <td class="utc-offset-8"><div class="offset-label">+8</div><input type="checkbox" name="utc-8"></td>
-          <td class="utc-offset-9"><div class="offset-label">+9</div><input type="checkbox" name="utc-9"></td>
-          <td class="utc-offset-10"><div class="offset-label">+10</div><input type="checkbox" name="utc-10"></td>
-          <td class="utc-offset-11"><div class="offset-label">+11</div><input type="checkbox" name="utc-11"></td>
-          <td class="utc-offset-12 last"><div class="offset-label">+12</div><input type="checkbox" name="utc-12"></td>
+          <td class="utc-offset--11 first"> <div class="offset-label" >-11</div> <input type="checkbox" name="utc--11"> </td>
+          <!-- 
+
+          ... 
+
+          -->
         </tr>
         
         <tr class="slider">
-          <td class="utc-offset--11 first">
-            <div class="wrap">
-              <div id="all-range"></div>
-            </div>
-          </td>
-          <td class="utc-offset--10"><div class="wrap"></div></td>
-          <td class="utc-offset--9"><div class="wrap"></div></td>
-          <td class="utc-offset--8"><div class="wrap"></div></td>
-          <td class="utc-offset--7"><div class="wrap"></div></td>
-          <td class="utc-offset--6"><div class="wrap"></div></td>
-          <td class="utc-offset--5"><div class="wrap"></div></td>
-          <td class="utc-offset--4"><div class="wrap"></div></td>
-          <td class="utc-offset--3"><div class="wrap"></div></td>
-          <td class="utc-offset--2"><div class="wrap"></div></td>
-          <td class="utc-offset--1"><div class="wrap"></div></td>
-          <td class="utc-offset-0"><div class="wrap"></div></td>
-          <td class="utc-offset-1"><div class="wrap"></div></td>
-          <td class="utc-offset-2"><div class="wrap"></div></td>
-          <td class="utc-offset-3"><div class="wrap"></div></td>
-          <td class="utc-offset-4"><div class="wrap"></div></td>
-          <td class="utc-offset-5"><div class="wrap"></div></td>
-          <td class="utc-offset-6"><div class="wrap"></div></td>
-          <td class="utc-offset-7"><div class="wrap"></div></td>
-          <td class="utc-offset-8"><div class="wrap"></div></td>
-          <td class="utc-offset-9"><div class="wrap"></div></td>
-          <td class="utc-offset-10"><div class="wrap"></div></td>
-          <td class="utc-offset-11"><div class="wrap"></div></td>
-          <td class="utc-offset-12 last"><div class="wrap"></div></td>
+          <td class="utc-offset--11 first"> <div class="wrap"> <div id="all-range"></div> </div> </td>
+          <!-- 
+
+          ... 
+
+          -->
         </tr>
 
       </tbody>

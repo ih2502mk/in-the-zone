@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app >
+<html ng-app="TimeFormatsModule" >
   <head>
     <title>Time zones</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,8 +20,8 @@
         </tr>
         
         <tr class="slider">
-          <td ng-repeat="timeZone in timeZones" class='{{timeZone["active"]}}' > 
-            <div class="wrap"> 
+          <td ng-repeat="timeZone in timeZones" ng-class='timeZone.active | classActive' > 
+            <div class="wrap" > 
                
             </div> 
           </td>

@@ -1,7 +1,7 @@
-angular.module("TimeFormatsModule", []).
-	filter('value48ToTime', function() {
+angular.module("TimeFormatsModule", [])
+	.filter('value48ToTime', function() {
 		return function(value, format) {
-			format = format || TIME_FORMAT_24H;
+			format = format || "24h";
 		   
 	    var hrs = parseInt(Math.floor(value / 2))
 	      , mins = (value % 2) ? "30" : "00"
@@ -10,7 +10,7 @@ angular.module("TimeFormatsModule", []).
 	    hrs = (hrs < 0) ? 24 + hrs : hrs;
 	    hrs = (hrs > 24) ? hrs - 24 : hrs;
 
-	    if (format === TIME_FORMAT_12H) {
+	    if (format === "12h") {
 	    	if (hrs > 12 ) {
 	    		hrs = hrs - 12;
 	    		a = " PM";
@@ -30,34 +30,36 @@ angular.module("TimeFormatsModule", []).
 	    
 	    return hrs + ":" + mins + a;   
 		}
-	})
+	});
+
+angular.module("TimeFormatsModule", [])
+	.filter('classActive', function() {
+		return function(value) {
+			return value ? "active" : "";
+		}
+	});
 
 function TimeZoneController($scope) {
-	var 
-		  TIME_FORMAT_24H = "24h"
-		, TIME_FORMAT_12H = "12h"
-
-
 
 	$scope.timeZones = [
 		{
 			"utc-offset" : -11,
 			"active" : false,
 			"current" : false,
-			"timeFormat" : TIME_FORMAT_24H
+			"timeFormat" : "24h"
 		},
 		{
 			"utc-offset" : -10,
 			"active" : false,
 			"current" : false,
-			"timeFormat" : TIME_FORMAT_24H
+			"timeFormat" : "24h"
 		},
 		{
 			"utc-offset" : -9,
 			"active" : false,
 			"current" : false,
-			"timeFormat" : TIME_FORMAT_24H
-		},
+			"timeFormat" : "24h"
+		}
 
 	];
 

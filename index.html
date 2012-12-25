@@ -9,7 +9,7 @@
       
   </head>
   <body>
-   
+    
     <table ng-controller="TimeZoneController" class="zones" width="100%">
       <tbody>
         <tr class="chooser">
@@ -21,10 +21,17 @@
         
         <tr class="slider">
           <td ng-repeat="timeZone in timeZones" ng-class='timeZone.active | classActive' > 
-            <div class="wrap" > 
-               
-            </div> 
+            <div class="time-slides-tooltips top" ng-show="timeZone.active">
+              {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+            </div>
+            <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
+              {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+            </div>
           </td>
+        </tr>
+
+        <tr>
+          <td class="footer" colspan="{{timeZones.length}}"></td>
         </tr>
 
       </tbody>

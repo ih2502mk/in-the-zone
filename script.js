@@ -1,11 +1,12 @@
 angular.module("TimeFormatsModule", [])
+	
 	.filter('value48ToTime', function() {
 		return function(value, format) {
 			format = format || "24h";
 		   
 	    var hrs = parseInt(Math.floor(value / 2))
 	      , mins = (value % 2) ? "30" : "00"
-	      , a = false;
+	      , a = "";
 	    
 	    hrs = (hrs < 0) ? 24 + hrs : hrs;
 	    hrs = (hrs > 24) ? hrs - 24 : hrs;
@@ -27,12 +28,10 @@ angular.module("TimeFormatsModule", [])
 	    	}
 	    }
 
-	    
 	    return hrs + ":" + mins + a;   
 		}
-	});
+	})
 
-angular.module("TimeFormatsModule", [])
 	.filter('classActive', function() {
 		return function(value) {
 			return value ? "active" : "";
@@ -43,19 +42,19 @@ function TimeZoneController($scope) {
 
 	$scope.timeZones = [
 		{
-			"utc-offset" : -11,
+			"utcOffset" : -11,
 			"active" : false,
 			"current" : false,
 			"timeFormat" : "24h"
 		},
 		{
-			"utc-offset" : -10,
+			"utcOffset" : -10,
 			"active" : false,
 			"current" : false,
 			"timeFormat" : "24h"
 		},
 		{
-			"utc-offset" : -9,
+			"utcOffset" : -9,
 			"active" : false,
 			"current" : false,
 			"timeFormat" : "24h"

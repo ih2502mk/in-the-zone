@@ -1,8 +1,24 @@
+html {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	position: absolute;
+	height: 100%;
+	width: 100%;	
+	top: 0;
+	left: 0;
+	margin: 0;
+}
 
 .zones {
   border-collapse: collapse;
   position: relative;
   table-layout: fixed;
+  height: 100%;
 }
 
 .zones td {
@@ -14,15 +30,15 @@
   break-word: word-wrap;
 }
 
-.wrap {
-	position: relative;
+.footer {
+	height: 50px;
 }
 
 .slider {
 	background: url(crossBG2.png) left top repeat transparent;
 }
 
-.slider .chosen {
+.slider .active {
 	background-color: #dcf3f3;
 }
 
@@ -78,8 +94,7 @@
 }
 
 .time-slides-tooltips {
-	position: absolute;
-	display: block;
+	position: relative;
 	text-align: center;
 	z-index: 10;
 	padding: 0;
@@ -88,5 +103,4 @@
 	font-size: 12px;
 	line-height: 100%;
 	color: #4a757d;
-	width: 100%;
 }

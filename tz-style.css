@@ -14,24 +14,13 @@ body {
 	margin: 0;
 }
 
-.zones {
-  border-collapse: collapse;
-  position: relative;
-  table-layout: fixed;
-  height: 100%;
+.column {
+	height: 100%;
+	float: left;
 }
 
-.zones td {
-  border: none;
-  border-left: 1px dotted #4a757d;
-  padding: 0;
-  position: relative;
-  vertical-align: top;
-  break-word: word-wrap;
-}
-
-.footer {
-	height: 50px;
+.chooser-check {
+	display: inline-block;
 }
 
 .slider {
@@ -42,14 +31,13 @@ body {
 	background-color: #dcf3f3;
 }
 
-.chooser td {
-	text-align: center;
-	vertical-align: middle;
+.chooser {
 	height: 50px;
 	font-family : "PT Sans Narrow", sans-serif;
 	font-size: 16px;
 	font-weight: bold;
 	color: #4a757d;
+	text-align: center;
 }
 
 .offset-label {

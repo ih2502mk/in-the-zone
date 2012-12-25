@@ -66,4 +66,6 @@ function TimeZoneController($scope) {
 		"topValue" : 35,
 		"bottomValue" : 12
 	};
+
+	$scope.w = "25%";
 }

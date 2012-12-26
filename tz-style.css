@@ -8,10 +8,16 @@ html {
 body {
 	position: absolute;
 	height: 100%;
-	width: 100%;	
+	width: 96%;	
 	top: 0;
 	left: 0;
-	margin: 0;
+	margin: 0 2%;
+}
+
+.columns {
+	width: 100%;
+	height: 100%;
+	position: absolute;
 }
 
 .column {
@@ -19,20 +25,8 @@ body {
 	float: left;
 }
 
-.chooser-check {
-	display: inline-block;
-}
-
-.slider {
-	background: url(crossBG2.png) left top repeat transparent;
-}
-
-.slider .active {
-	background-color: #dcf3f3;
-}
-
 .chooser {
-	height: 50px;
+	height: 10%;
 	font-family : "PT Sans Narrow", sans-serif;
 	font-size: 16px;
 	font-weight: bold;
@@ -40,38 +34,43 @@ body {
 	text-align: center;
 }
 
+.chooser-check {
+	display: inline-block;
+}
+
+.slider-container {
+	background: url(crossBG2.png) left top repeat transparent;
+	height: 80%;
+	border-right: 1px dotted #4a757d;
+	position: relative;
+}
+
+.column:first-child .slider-container {
+	border-left: 1px dotted #4a757d;
+}
+
+.slider-container.active {
+	background-color: #dcf3f3;
+	background-image: none;
+}
+
 .offset-label {
 	text-align: center;
 }
 
-#slider-range {
-  height: 800px;
-  background-color: #dcf3f3;
-}
-
-.ui-slider-vertical {
+.range-wrapper {
+	position: absolute;
 	width: 100%;
-	border: none;
-	border-radius: 0;
+	height: 80%;
+	top: 10%;
+	padding: 0;
+	margin: 0;
 }
 
-.ui-slider .ui-slider-handle {
-	height: 4px;
-	width: 100%;
-	border: none;
-	border-radius: 0;
-	left: 0;
-	margin-bottom: -2px;
-	background-color: #4a757d;
-}
-
-.ui-widget-header {
-	background-color: #31c8e3;
-}
-
-#all-range {
+.range-indicator {
 	position: absolute;
 	left: 0;
+	width: 100%;
 	background-color: #31c8e3;
 	border-top: 1px solid #4a757d;
 	border-bottom: 1px solid #4a757d;
@@ -82,7 +81,8 @@ body {
 }
 
 .time-slides-tooltips {
-	position: relative;
+	position: absolute;
+	width: 100%;
 	text-align: center;
 	z-index: 10;
 	padding: 0;

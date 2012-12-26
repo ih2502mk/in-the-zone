@@ -9,22 +9,32 @@
       
   </head>
   <body ng-controller="TimeZoneController">
-    
-    <div class="column" ng-repeat="timeZone in timeZones" style="width:{{100 / timeZones.length}}% ">
-      <div class="chooser">
-        <div class="offset-label" >{{timeZone.utcOffset}}</div> 
-        <input class="chooser-check" type="checkbox" ng-model='timeZone["active"]' />
-      </div>
-
-      <div class="slider" ng-class='timeZone.active | classActive'>
-        <div class="time-slides-tooltips top" ng-show="timeZone.active">
-              {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+    <div class="columns">
+      <div class="column" ng-repeat="timeZone in timeZones" style="width:{{100 / timeZones.length}}% ">
+        <div class="chooser">
+          <div class="offset-label" >{{timeZone.utcOffset}}</div> 
+          <input class="chooser-check" type="checkbox" ng-model='timeZone["active"]' />
         </div>
-        <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
-          {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+
+        <div class="slider-container" ng-class='timeZone.active | classActive'>
+          <div class="time-slides-tooltips top" ng-show="timeZone.active">
+                {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+          </div>
+          <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
+            {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+          </div>
         </div>
       </div>
     </div>
-  
+
+    <div class="range-wrapper">
+      <div class="range-indicator"></div>
+      <div class="slider">
+        <div class="range"></div>
+        <a href="#" class="slider-handle top" ></a>
+        <a href="#" class="slider-handle bottom" ></a>
+      </div>      
+    </div>
+
   </body>
 </html>

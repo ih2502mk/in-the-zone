@@ -63,9 +63,52 @@ angular.module("TimeFormatsModule", [])
 					, bottomHandle = element.find('a')[1] ;
 
 
+
 			}
 		};
-	})	
+	})
+
+	.directive('draggable', function factory($document){
+		return {
+			restrict : "AC",
+			scope : {
+
+			},
+			link : function(scope, element, attrs) {
+				element.css({
+					"position" : "absolute",
+					"width" : "100px",
+					"height" : "100px",
+					"backgroundColor" : "#ff0",
+					"z-index" : 1000
+				});
+
+				scope.moving = false;
+				scope.startX = 0;
+				scope.startY = 0;
+
+				element.bind('mousedown', function(event){
+					scope.moving = true;
+					scope.startX = event.pageX;
+					scope.startY = event.pageY;
+				});
+				element.bind('mouseup', function() {
+					scope.moving = false;
+				});
+				
+				$document.bind('mousemove', function(event){
+					if (scope.moving) {
+						element.css({
+							"top" : event.pageY + "px",
+							"left" : event.pageX + "px"
+						});						
+					}
+				});
+
+
+			}
+		}
+	})
 
 	//an experimentation thing
 	.directive('fooDir', function factory(){

@@ -39,7 +39,19 @@ angular.module("TimeFormatsModule", [])
 		}
 	})
 
-	.directive('rangeSlider', function factory(){
+	.directive('vRangeSlider', function factory($document){
+		var disableUserSelect = function() {
+			$document[0].body.style.webkitUserSelect = "none";
+			$document[0].body.style.MozUserSelect = "none";
+			$document[0].body.style.userSelect = "none";
+		}
+
+		var enableUserSelect = function() {
+			$document[0].body.style.webkitUserSelect = "all";
+			$document[0].body.style.MozUserSelect = "all";
+			$document[0].body.style.userSelect = "all";		
+		}
+
 		return {
 			template : 
 					'<div class="slider" >' 
@@ -58,11 +70,62 @@ angular.module("TimeFormatsModule", [])
 				onChange : "&"
 			},
 			link : function(scope, element, attrs) {
+				element.css({
+					"position": "relative",
+					"width" : "100%",
+					"height" : "100%"
+				});
+
 				var range = element.find('div')
-					,	topHandle = element.find('a')[0]
-					, bottomHandle = element.find('a')[1] ;
+					,	topHandle = angular.element(element.find('a')[0])
+					, bottomHandle = angular.element(element.find('a')[1])
+					, elementHeight = element[0].clientHeight
+					, pxStep = elementHeight / (parseInt(attrs.max) - parseInt(attrs.min))
+					;
 
+				topHandle.css({
+					"display" : "block",
+					"position" : "absolute",
+					"width" : "100%",
+					"height" : "20px",
+					"backgroundColor" : "#ff0"
+				});
 
+				scope.topMoving = false;
+				scope.topCurrentY = 0;
+				scope.topOldY = 0;
+
+				topHandle.bind('mousedown', function(event){
+					event.preventDefault();
+					
+					scope.topMoving = true;
+					scope.topCurrentY = parseFloat(topHandle.css("top")) || 0;
+					scope.topOldY = event.pageY;
+
+					disableUserSelect();
+				});
+
+				$document.bind('mouseup', function(){
+					scope.topMoving = false;
+					
+					enableUserSelect();					
+				});
+
+				$document.bind('mousemove', function(event){
+					if (scope.topMoving) {
+						var offsetY = event.pageY - scope.topOldY;
+										
+						topHandle.css({
+							"top" : scope.topCurrentY + offsetY + "px"								
+						});							
+					
+						scope.topOldY = event.pageY;
+
+						scope.topCurrentY = scope.topCurrentY + offsetY;
+
+						return false;
+					}
+				});
 
 			}
 		};
@@ -169,7 +232,7 @@ function TimeZoneController($scope) {
 		{
 			"utcOffset" : -10,
 			"active" : false,
-			"current" : false,
+			"current" : true,
 			"timeFormat" : "12h"
 		},
 		{

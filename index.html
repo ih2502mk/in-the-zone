@@ -23,22 +23,23 @@
           <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
             {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
+          <v-range-slider max='24' min='0'></v-range-slider>
         </div>
       </div>
     </div>
 
-    <div class="range-wrapper">
+    <!--div class="range-wrapper">
       <div class="range-indicator"></div>
       <div class="slider">
         <div class="range"></div>
         <a href="#" class="slider-handle top" ></a>
         <a href="#" class="slider-handle bottom" ></a>
       </div>      
-    </div>
+    </div-->
 
     <!--<foo-dir passed-value='aaa' on-action="log(arg1, arg2)"></foo-dir>-->
 
-    <div draggable >123</div>
+    <!--div draggable >123</div-->
     
 
   </body>

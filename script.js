@@ -114,8 +114,8 @@ angular.module("TimeFormatsModule", [])
 				var topHandleHeight = topHandle[0].clientHeight
 					, bottomHandleHeight = bottomHandle[0].clientHeight
 					, pxStep = ( elementHeight 
-					- topHandleHeight 
-					- bottomHandleHeight ) / (attrs.max - attrs.min);
+						- topHandleHeight 
+						- bottomHandleHeight ) / (attrs.max - attrs.min);
 				
 				scope.topMoving = false;
 				scope.topCurrentY = topHandle[0].offsetTop || 0;
@@ -168,7 +168,7 @@ angular.module("TimeFormatsModule", [])
 								- bottomHandle[0].clientHeight;
 						}
 
-						scope.topValue = Math.round(top / pxStep);
+						scope.topValue = Math.round(top / pxStep);						
 
 						top = Math.round (pxStep * scope.topValue);
 										
@@ -216,6 +216,10 @@ angular.module("TimeFormatsModule", [])
 						return false;
 					}
 
+				});
+
+				scope.$watch('topValue', function(newValue, oldValue) {
+					console.log(newValue);
 				});
 
 			}
@@ -343,4 +347,6 @@ function TimeZoneController($scope) {
 	$scope.log = function() {
 		console.log(arguments);
 	}
+
+	$scope.topVal = 5;
 }

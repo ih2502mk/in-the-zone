@@ -56,8 +56,8 @@ angular.module("TimeFormatsModule", [])
 			template : 
 					'<div class="slider" >' 
 				+ '<div class="range"></div>'
-				+ '<a href="#" class="slider-handle top" ></a>'
-				+ '<a href="#" class="slider-handle bottom" ></a>'
+				+ '<a class="slider-handle top" ></a>'
+				+ '<a class="slider-handle bottom" ></a>'
 				+ '</div>',
 			replace : true,
 			restrict : "AEC",
@@ -70,6 +70,9 @@ angular.module("TimeFormatsModule", [])
 				onChange : "&"
 			},
 			link : function(scope, element, attrs) {
+				scope.topValue = scope.topValue || attrs.min;
+				scope.bottomValue = scope.bottomValue || attrs.max
+
 				element.css({
 					"position": "relative",
 					"width" : "100%",
@@ -80,44 +83,102 @@ angular.module("TimeFormatsModule", [])
 					,	topHandle = angular.element(element.find('a')[0])
 					, bottomHandle = angular.element(element.find('a')[1])
 					, elementHeight = element[0].clientHeight
-					, pxStep = elementHeight / (parseInt(attrs.max) - parseInt(attrs.min))
 					;
 
 				topHandle.css({
 					"display" : "block",
 					"position" : "absolute",
 					"width" : "100%",
-					"height" : "20px",
-					"backgroundColor" : "#ff0"
+					"height" : "5px",
+					"backgroundColor" : "#4a757d",
+					"top" : 0
 				});
 
+				bottomHandle.css({
+					"display" : "block",
+					"position" : "absolute",
+					"width" : "100%",
+					"height" : "5px",
+					"backgroundColor" : "#00757d",
+					"top" : (elementHeight - 5) + "px"  
+				});
+
+				range.css({
+					"position" : "absolute",
+					"width" : "100%",
+					"backgroundColor" : "#31c8e3",
+					"top" : topHandle[0].offsetTop + 3 + "px",
+					"bottom" : elementHeight - bottomHandle[0].offsetTop - 3 + "px"
+				});
+
+				var topHandleHeight = topHandle[0].clientHeight
+					, bottomHandleHeight = bottomHandle[0].clientHeight
+					, pxStep = ( elementHeight 
+					- topHandleHeight 
+					- bottomHandleHeight ) / (attrs.max - attrs.min);
+				
 				scope.topMoving = false;
-				scope.topCurrentY = 0;
+				scope.topCurrentY = topHandle[0].offsetTop || 0;
 				scope.topOldY = 0;
 
+				scope.bottomMoving = false;
+				scope.bottomCurrentY = topHandle[0].offsetTop || 0;
+				scope.bottomOldY = 0;
+
 				topHandle.bind('mousedown', function(event){
-					event.preventDefault();
-					
+
 					scope.topMoving = true;
-					scope.topCurrentY = parseFloat(topHandle.css("top")) || 0;
+					scope.topCurrentY = topHandle[0].offsetTop || 0;
 					scope.topOldY = event.pageY;
+
+					disableUserSelect();
+				});
+
+				bottomHandle.bind('mousedown', function(event){
+
+					scope.bottomMoving = true;
+					scope.bottomCurrentY = bottomHandle[0].offsetTop || 0;
+					scope.bottomOldY = event.pageY;
 
 					disableUserSelect();
 				});
 
 				$document.bind('mouseup', function(){
 					scope.topMoving = false;
+					scope.bottomMoving = false;
 					
 					enableUserSelect();					
 				});
 
 				$document.bind('mousemove', function(event){
+					var offsetY
+						, top;
+
 					if (scope.topMoving) {
-						var offsetY = event.pageY - scope.topOldY;
+						offsetY = event.pageY - scope.topOldY;
+
+						top = scope.topCurrentY + offsetY;
+						if ( top < 0 ) { 
+							top = 0 
+						}
+						else if ( top >= bottomHandle[0].offsetTop 
+							- topHandleHeight ) {
+							
+							top = bottomHandle[0].offsetTop 
+								- bottomHandle[0].clientHeight;
+						}
+
+						scope.topValue = Math.round(top / pxStep);
+
+						top = Math.round (pxStep * scope.topValue);
 										
 						topHandle.css({
-							"top" : scope.topCurrentY + offsetY + "px"								
-						});							
+							"top" : top + "px"								
+						});
+
+						range.css({
+							"top" : top + 3 + "px"
+						});
 					
 						scope.topOldY = event.pageY;
 
@@ -125,6 +186,36 @@ angular.module("TimeFormatsModule", [])
 
 						return false;
 					}
+
+					if (scope.bottomMoving) {
+						offsetY = event.pageY - scope.bottomOldY;
+
+						top = scope.bottomCurrentY + offsetY;
+						if ( top <= topHandle[0].offsetTop + topHandleHeight ) { 
+							top = topHandle[0].offsetTop + topHandleHeight 
+						}
+						else if ( top >= elementHeight - bottomHandle[0].clientHeight ) {
+							top = elementHeight - bottomHandle[0].clientHeight;
+						}
+
+						top = Math.round (pxStep * Math.round(top / pxStep)) 
+							+ topHandleHeight;
+										
+						bottomHandle.css({
+							"top" : top + "px"								
+						});
+
+						range.css({
+							"bottom" : elementHeight - top - 3 + "px"
+						});
+					
+						scope.bottomOldY = event.pageY;
+
+						scope.bottomCurrentY = scope.bottomCurrentY + offsetY;
+
+						return false;
+					}
+
 				});
 
 			}
@@ -192,8 +283,6 @@ angular.module("TimeFormatsModule", [])
 						return false;
 					}
 				});
-
-
 			}
 		}
 	})

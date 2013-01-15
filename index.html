@@ -23,7 +23,7 @@
           <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
             {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
-          <v-range-slider max='24' min='0'></v-range-slider>
+          <v-range-slider max='24' min='0' top-value = '5' bottom-value='13'></v-range-slider>
         </div>
       </div>
     </div>

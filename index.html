@@ -9,37 +9,48 @@
       
   </head>
   <body ng-controller="TimeZoneController">
+    
     <div class="columns">
       <div class="column" ng-repeat="timeZone in timeZones" style="width:{{100 / timeZones.length}}% ">
         <div class="chooser">
           <div class="offset-label" >{{timeZone.utcOffset}}</div> 
-          <input class="chooser-check" type="checkbox" ng-model='timeZone["active"]' />
+          <input class="chooser-check" type="checkbox" ng-model='timeZone.active' />
         </div>
 
-        <div class="slider-container" ng-class='timeZone.active | classActive'>
+        <div class="slider-container" ng-class='timeZone.active|toggleClass:"active"'>
           <div class="time-slides-tooltips top" ng-show="timeZone.active">
-                {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
+            {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
           <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
             {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
+          <v-range-slider 
+            min='0'
+            max='48'
+            top-value='$parent.topVal' 
+            bottom-value='$parent.bottomVal' >
+
+          </v-range-slider>
         </div>
       </div>
     </div>
-
-    <div class="range-wrapper">
-      <div class="range-indicator"></div>
-      <div class="slider">
-        <div class="range"></div>
-        <a href="#" class="slider-handle top" ></a>
-        <a href="#" class="slider-handle bottom" ></a>
-      </div>      
-    </div>
-
-    <!--<foo-dir passed-value='aaa' on-action="log(arg1, arg2)"></foo-dir>-->
-
-    <div draggable >123</div>
     
 
+    <!--
+    <div style="height : 600px; width: 50px">
+      <v-range-slider
+        min="0"
+        max="48"
+        top-value="topVal" 
+        bottom-value='bottomVal' >
+
+      </v-range-slider>
+    </div>
+    
+    <span ng-bind="topVal"></span>
+    <input ng-model="topVal">
+    <span ng-bind="bottomVal"></span>
+    <input ng-model="bottomVal">
+    -->
   </body>
 </html>

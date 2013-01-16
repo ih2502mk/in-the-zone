@@ -65,25 +65,20 @@ angular.module("TimeFormatsModule", [])
 				topValue : "=",
 				bottomValue : "=",
 				min : "@",
-				max : "@",
-				step : "@",
-				onChange : "&"
+				max : "@"
 			},
 			link : function(scope, element, attrs) {
-				scope.topValue = scope.topValue || attrs.min;
-				scope.bottomValue = scope.bottomValue || attrs.max
+				var range = element.find('div')
+					,	topHandle = angular.element(element.find('a')[0])
+					, bottomHandle = angular.element(element.find('a')[1])					 
+					;
 
 				element.css({
 					"position": "relative",
 					"width" : "100%",
 					"height" : "100%"
 				});
-
-				var range = element.find('div')
-					,	topHandle = angular.element(element.find('a')[0])
-					, bottomHandle = angular.element(element.find('a')[1])
-					, elementHeight = element[0].clientHeight
-					;
+				var elementHeight = element[0].clientHeight;
 
 				topHandle.css({
 					"display" : "block",
@@ -93,6 +88,7 @@ angular.module("TimeFormatsModule", [])
 					"backgroundColor" : "#4a757d",
 					"top" : 0
 				});
+				var topHandleHeight = topHandle[0].clientHeight;
 
 				bottomHandle.css({
 					"display" : "block",
@@ -102,6 +98,7 @@ angular.module("TimeFormatsModule", [])
 					"backgroundColor" : "#00757d",
 					"top" : (elementHeight - 5) + "px"  
 				});
+				var bottomHandleHeight = bottomHandle[0].clientHeight;
 
 				range.css({
 					"position" : "absolute",
@@ -111,41 +108,46 @@ angular.module("TimeFormatsModule", [])
 					"bottom" : elementHeight - bottomHandle[0].offsetTop - 3 + "px"
 				});
 
-				var topHandleHeight = topHandle[0].clientHeight
-					, bottomHandleHeight = bottomHandle[0].clientHeight
-					, pxStep = ( elementHeight 
+				attrs.min = parseInt(attrs.min) || 0;
+				attrs.max = parseInt(attrs.max) || (elementHeight 
+					- topHandleHeight - bottomHandleHeight);
+
+				scope.topValue = scope.topValue || attrs.min;
+				scope.bottomValue = scope.bottomValue || attrs.max;
+
+				var pxStep = ( elementHeight 
 						- topHandleHeight 
 						- bottomHandleHeight ) / (attrs.max - attrs.min);
 				
-				scope.topMoving = false;
-				scope.topCurrentY = topHandle[0].offsetTop || 0;
-				scope.topOldY = 0;
-
-				scope.bottomMoving = false;
-				scope.bottomCurrentY = topHandle[0].offsetTop || 0;
-				scope.bottomOldY = 0;
+				var topMoving = false
+					, topCurrentY = topHandle[0].offsetTop || 0
+					, topOldY = 0
+					, bottomMoving = false
+					, bottomCurrentY = topHandle[0].offsetTop || 0
+					, bottomOldY = 0
+					;
 
 				topHandle.bind('mousedown', function(event){
 
-					scope.topMoving = true;
-					scope.topCurrentY = topHandle[0].offsetTop || 0;
-					scope.topOldY = event.pageY;
+					topMoving = true;
+					topCurrentY = topHandle[0].offsetTop || 0;
+					topOldY = event.pageY;
 
 					disableUserSelect();
 				});
 
 				bottomHandle.bind('mousedown', function(event){
 
-					scope.bottomMoving = true;
-					scope.bottomCurrentY = bottomHandle[0].offsetTop || 0;
-					scope.bottomOldY = event.pageY;
+					bottomMoving = true;
+					bottomCurrentY = bottomHandle[0].offsetTop || 0;
+					bottomOldY = event.pageY;
 
 					disableUserSelect();
 				});
 
 				$document.bind('mouseup', function(){
-					scope.topMoving = false;
-					scope.bottomMoving = false;
+					topMoving = false;
+					bottomMoving = false;
 					
 					enableUserSelect();					
 				});
@@ -154,64 +156,37 @@ angular.module("TimeFormatsModule", [])
 					var offsetY
 						, top;
 
-					if (scope.topMoving) {
-						offsetY = event.pageY - scope.topOldY;
+					if (topMoving) {
+						offsetY = event.pageY - topOldY;
 
-						top = scope.topCurrentY + offsetY;
-						if ( top < 0 ) { 
-							top = 0 
-						}
-						else if ( top >= bottomHandle[0].offsetTop 
-							- topHandleHeight ) {
-							
-							top = bottomHandle[0].offsetTop 
-								- bottomHandle[0].clientHeight;
-						}
+						top = topCurrentY + offsetY;
+						if ( top >= 0 && top <= bottomHandle[0].offsetTop - topHandleHeight) { 
 
-						scope.topValue = Math.round(top / pxStep);						
-
-						top = Math.round (pxStep * scope.topValue);
-										
-						topHandle.css({
-							"top" : top + "px"								
-						});
-
-						range.css({
-							"top" : top + 3 + "px"
-						});
+							scope.topValue = Math.round(top / pxStep);
+							scope.$apply();
+						}				
 					
-						scope.topOldY = event.pageY;
+						topOldY = event.pageY;
 
-						scope.topCurrentY = scope.topCurrentY + offsetY;
+						topCurrentY = topCurrentY + offsetY;
 
 						return false;
 					}
 
-					if (scope.bottomMoving) {
-						offsetY = event.pageY - scope.bottomOldY;
+					if (bottomMoving) {
+						offsetY = event.pageY - bottomOldY;
 
-						top = scope.bottomCurrentY + offsetY;
-						if ( top <= topHandle[0].offsetTop + topHandleHeight ) { 
-							top = topHandle[0].offsetTop + topHandleHeight 
+						top = bottomCurrentY + offsetY;
+						if ( top >= topHandle[0].offsetTop + topHandleHeight 
+							&& top <= elementHeight - bottomHandle[0].clientHeight) { 
+							
+							scope.bottomValue = Math.round(top / pxStep);
+							scope.$apply();
 						}
-						else if ( top >= elementHeight - bottomHandle[0].clientHeight ) {
-							top = elementHeight - bottomHandle[0].clientHeight;
-						}
+						
+						bottomOldY = event.pageY;
 
-						top = Math.round (pxStep * Math.round(top / pxStep)) 
-							+ topHandleHeight;
-										
-						bottomHandle.css({
-							"top" : top + "px"								
-						});
-
-						range.css({
-							"bottom" : elementHeight - top - 3 + "px"
-						});
-					
-						scope.bottomOldY = event.pageY;
-
-						scope.bottomCurrentY = scope.bottomCurrentY + offsetY;
+						bottomCurrentY = bottomCurrentY + offsetY;
 
 						return false;
 					}
@@ -219,8 +194,39 @@ angular.module("TimeFormatsModule", [])
 				});
 
 				scope.$watch('topValue', function(newValue, oldValue) {
-					console.log(newValue);
+					newValue = !isNaN(newValue) ? parseInt(newValue) : oldValue;
+					newValue = newValue <= attrs.min ? attrs.min : newValue;
+					newValue = newValue >= scope.bottomValue ? scope.bottomValue : newValue;
+
+					var top = Math.round (pxStep * newValue);
+									
+					topHandle.css({
+						"top" : top + "px"
+					});
+
+					range.css({
+						"top" : top + 3 + "px"
+					});
+					
 				});
+
+				scope.$watch('bottomValue', function(newValue, oldValue) {
+					newValue = !isNaN(newValue) ? parseInt(newValue) : oldValue;
+					newValue = newValue <= scope.topValue ? scope.topValue : newValue;
+					newValue = newValue >= attrs.max ? attrs.max : newValue;
+					
+					var top = Math.round (pxStep * newValue) 
+							+ topHandleHeight;
+										
+					bottomHandle.css({
+						"top" : top + "px"								
+					});
+
+					range.css({
+						"bottom" : elementHeight - top - 3 + "px"
+					});
+
+				})
 
 			}
 		};
@@ -309,9 +315,7 @@ angular.module("TimeFormatsModule", [])
 				console.log(element.find('br'));
 			}
 		};
-	})
-
-	;
+	});
 
 function TimeZoneController($scope) {
 
@@ -320,7 +324,7 @@ function TimeZoneController($scope) {
 			"utcOffset" : -11,
 			"active" : false,
 			"current" : false,
-			"timeFormat" : "24h"
+			"timeFormat" : "24h"			
 		},
 		{
 			"utcOffset" : -10,
@@ -342,11 +346,10 @@ function TimeZoneController($scope) {
 		"bottomValue" : 12
 	};
 
-	$scope.aaa = "Hello man!!!";
-
 	$scope.log = function() {
 		console.log(arguments);
 	}
 
 	$scope.topVal = 5;
+	$scope.bottomVal = 13;
 }

@@ -33,9 +33,9 @@ angular.module("TimeFormatsModule", [])
 		}
 	})
 
-	.filter('classActive', function() {
-		return function(value) {
-			return value ? "active" : "";
+	.filter('toggleClass', function() {
+		return function(value, classStr) {
+			return value ? classStr : "";
 		}
 	})
 

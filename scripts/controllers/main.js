@@ -24,7 +24,7 @@ angular.module('inTheZone')
 		];
 
 		$scope.range = {
-			"topValue" : 35,
-			"bottomValue" : 12
+			"topValue" : 12,
+			"bottomValue" : 35
 		};
 	});

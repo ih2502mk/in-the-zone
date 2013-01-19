@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="inTheZone" >
+<html ng-app="InTheZone" >
   <head>
     <title>Time zones</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="styles/tz-style.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+    <link rel="stylesheet" href="styles/vRangeSlider.theme.css" />
       
   </head>
   <body ng-controller="MainCtrl">
@@ -26,7 +27,8 @@
             min='0'
             max='48'
             top-value='$parent.range.topValue' 
-            bottom-value='$parent.range.bottomValue' >
+            bottom-value='$parent.range.bottomValue' 
+            class='tz-slider' >
 
           </v-range-slider>
         </div>

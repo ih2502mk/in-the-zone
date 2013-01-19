@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html ng-app="TimeFormatsModule" >
+<html ng-app="inTheZone" >
   <head>
     <title>Time zones</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="tz-style.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-    <script src="script.js"></script>
-      
+    <link rel="stylesheet" href="styles/tz-style.css" />
+
   </head>
-  <body ng-controller="TimeZoneController">
+  <body ng-controller="MainCtrl">
     
     <div class="columns">
       <div class="column" ng-repeat="timeZone in timeZones" style="width:{{100 / timeZones.length}}% ">
@@ -27,8 +25,8 @@
           <v-range-slider 
             min='0'
             max='48'
-            top-value='$parent.topVal' 
-            bottom-value='$parent.bottomVal' >
+            top-value='$parent.range.topValue' 
+            bottom-value='$parent.range.bottomValue' >
 
           </v-range-slider>
         </div>
@@ -52,5 +50,12 @@
     <span ng-bind="bottomVal"></span>
     <input ng-model="bottomVal">
     -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/directives/vRangeSlider.js"></script>
+    <script src="scripts/filters/toggleClass.js"></script>
+    <script src="scripts/filters/value48ToTime.js"></script>
+
   </body>
 </html>

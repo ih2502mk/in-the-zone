@@ -15,9 +15,9 @@ angular.module('VerticalRangeSlider', [])
 		return {
 			template : 
 					'<div class="slider" >' 
-				+ '<div class="range"></div>'
-				+ '<a class="slider-handle top" ></a>'
-				+ '<a class="slider-handle bottom" ></a>'
+				+ '  <div class="range"></div>'
+				+ '  <a class="slider-handle top" ></a>'
+				+ '  <a class="slider-handle bottom" ></a>'
 				+ '</div>',
 			replace : true,
 			restrict : "AEC",
@@ -25,48 +25,54 @@ angular.module('VerticalRangeSlider', [])
 				topValue : "=",
 				bottomValue : "=",
 				min : "@",
-				max : "@"
+				max : "@",
+				themeClass : "@"
 			},
-			compile : function (element, attrs) {
-				
-				
+			compile : function (element, attrs) {			
+				var range = element.find('div')
+					,	topHandle = angular.element(element.find('a')[0])
+					, bottomHandle = angular.element(element.find('a')[1])					 
+					;
+
+				attrs["class"] && element.addClass(attrs["class"]);
+
+				element.css({
+					"position": "relative",
+					"width" : "100%",
+					"height" : "100%"
+				});
+
+				topHandle.css({
+					"display" : "block",
+					"position" : "absolute",
+					"top" : 0
+				});
+
+				bottomHandle.css({
+					"display" : "block",
+					"position" : "absolute",					
+					"top" : 0
+				});
+
+				range.css({
+					"position" : "absolute",					
+				});
+
 				return function link(scope, element, attrs) {
 					var range = element.find('div')
 						,	topHandle = angular.element(element.find('a')[0])
 						, bottomHandle = angular.element(element.find('a')[1])					 
-						;
+						, elementHeight = element[0].clientHeight
+						, topHandleHeight = topHandle[0].clientHeight
+						, bottomHandleHeight = bottomHandle[0].clientHeight;
 
-					element.css({
-						"position": "relative",
-						"width" : "100%",
-						"height" : "100%"
-					});
-					var elementHeight = element[0].clientHeight;
-
-					topHandle.css({
-						"display" : "block",
-						"position" : "absolute",
-						"width" : "100%",
-						"height" : "5px",
-						"backgroundColor" : "#4a757d",
-						"top" : 0
-					});
-					var topHandleHeight = topHandle[0].clientHeight;
-
-					bottomHandle.css({
-						"display" : "block",
-						"position" : "absolute",
-						"width" : "100%",
-						"height" : "5px",
-						"backgroundColor" : "#00757d",
-						"top" : (elementHeight - 5) + "px"  
-					});
-					var bottomHandleHeight = bottomHandle[0].clientHeight;
-
-					range.css({
-						"position" : "absolute",
-						"width" : "100%",
-						"backgroundColor" : "#31c8e3",
+					bottomHandle.css({"top" : (elementHeight - 5) + "px"});					
+					
+					topHandle.css({"top" : 0});
+					
+					bottomHandle.css({"top" : (elementHeight - 5) + "px"});
+					
+					range.css({					
 						"top" : topHandle[0].offsetTop + 3 + "px",
 						"bottom" : elementHeight - bottomHandle[0].offsetTop - 3 + "px"
 					});
@@ -81,7 +87,7 @@ angular.module('VerticalRangeSlider', [])
 					var pxStep = ( elementHeight 
 							- topHandleHeight 
 							- bottomHandleHeight ) / (attrs.max - attrs.min);
-					
+
 					var topMoving = false
 						, topCurrentY = topHandle[0].offsetTop || 0
 						, topOldY = 0

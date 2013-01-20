@@ -1,4 +1,4 @@
-angular.module('inTheZone')
+angular.module('InTheZone')
 	.controller('MainCtrl', function($scope){
 		
 		$scope.timeZones = [

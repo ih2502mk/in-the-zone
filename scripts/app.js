@@ -9,7 +9,7 @@ angular.module('TimeFormatsModule', []);
 /**
  * Register "In the Zone" main application module
  */
-angular.module('inTheZone', [
+angular.module('InTheZone', [
 		'VerticalRangeSlider'
 	, 'TimeFormatsModule'
 ]);

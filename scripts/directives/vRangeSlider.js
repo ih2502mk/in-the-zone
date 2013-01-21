@@ -1,4 +1,4 @@
-angular.module('VerticalRangeSlider', [])
+angular.module('VerticalRangeSlider')
 	.directive('vRangeSlider', function factory($document){
 		var disableUserSelect = function() {
 			$document[0].body.style.webkitUserSelect = "none";

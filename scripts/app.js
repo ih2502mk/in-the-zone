@@ -5,6 +5,7 @@
  */
 angular.module('VerticalRangeSlider', []);
 angular.module('TimeFormatsModule', []);
+angular.module('ngExperiments', []);
 
 /**
  * Register "In the Zone" main application module
@@ -12,4 +13,5 @@ angular.module('TimeFormatsModule', []);
 angular.module('InTheZone', [
 		'VerticalRangeSlider'
 	, 'TimeFormatsModule'
+	, 'ngExperiments'
 ]);

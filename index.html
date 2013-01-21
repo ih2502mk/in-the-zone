@@ -24,6 +24,7 @@
             {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
           <v-range-slider 
+            ng-if="timeZone.active"
             min='0'
             max='48'
             top-value='$parent.range.topValue' 
@@ -56,6 +57,7 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/directives/vRangeSlider.js"></script>
+    <script src="scripts/directives/ngIf.js"></script>
     <script src="scripts/filters/toggleClass.js"></script>
     <script src="scripts/filters/value48ToTime.js"></script>
 

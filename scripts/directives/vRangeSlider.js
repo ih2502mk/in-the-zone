@@ -26,7 +26,8 @@ angular.module('VerticalRangeSlider')
 				bottomValue : "=",
 				min : "@",
 				max : "@",
-				themeClass : "@"
+				topPx : "=",
+				bottomPx : "="
 			},
 			compile : function (element, attrs) {			
 				var range = element.find('div')
@@ -61,16 +62,16 @@ angular.module('VerticalRangeSlider')
 				return function link(scope, element, attrs) {
 					var range = element.find('div')
 						,	topHandle = angular.element(element.find('a')[0])
-						, bottomHandle = angular.element(element.find('a')[1])					 
-						, elementHeight = element[0].clientHeight
+						, bottomHandle = angular.element(element.find('a')[1])					
 						, topHandleHeight = topHandle[0].clientHeight
-						, bottomHandleHeight = bottomHandle[0].clientHeight;
+						, bottomHandleHeight = bottomHandle[0].clientHeight
 
-					bottomHandle.css({"top" : (elementHeight - 5) + "px"});					
+						, elementHeight = element[0].clientHeight;			
+					
 					
 					topHandle.css({"top" : 0});
 					
-					bottomHandle.css({"top" : (elementHeight - 5) + "px"});
+					bottomHandle.css({"top" : (elementHeight - bottomHandleHeight) + "px"});
 					
 					range.css({					
 						"top" : topHandle[0].offsetTop + 3 + "px",
@@ -92,7 +93,7 @@ angular.module('VerticalRangeSlider')
 						, topCurrentY = topHandle[0].offsetTop || 0
 						, topOldY = 0
 						, bottomMoving = false
-						, bottomCurrentY = topHandle[0].offsetTop || 0
+						, bottomCurrentY = bottomHandle[0].offsetTop || 0
 						, bottomOldY = 0
 						;
 
@@ -147,7 +148,7 @@ angular.module('VerticalRangeSlider')
 
 							top = bottomCurrentY + offsetY;
 							if ( top >= topHandle[0].offsetTop + topHandleHeight 
-								&& top <= elementHeight - bottomHandle[0].clientHeight) { 
+								&& top <= elementHeight - bottomHandleHeight) { 
 								
 								scope.bottomValue = Math.round(top / pxStep);
 								scope.$apply();
@@ -176,6 +177,8 @@ angular.module('VerticalRangeSlider')
 						range.css({
 							"top" : top + 3 + "px"
 						});
+
+						scope.topPx =  top + 3;
 						
 					});
 
@@ -184,8 +187,8 @@ angular.module('VerticalRangeSlider')
 						newValue = newValue <= scope.topValue ? scope.topValue : newValue;
 						newValue = newValue >= attrs.max ? attrs.max : newValue;
 						
-						var top = Math.round (pxStep * newValue) 
-								+ topHandleHeight;
+						var top = Math.round (pxStep * newValue)
+								 + topHandleHeight;
 											
 						bottomHandle.css({
 							"top" : top + "px"								
@@ -194,6 +197,8 @@ angular.module('VerticalRangeSlider')
 						range.css({
 							"bottom" : elementHeight - top - 3 + "px"
 						});
+
+						scope.bottomPx = elementHeight - top - 3;
 
 					});
 

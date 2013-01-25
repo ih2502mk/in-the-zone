@@ -1,3 +1,8 @@
+/**
+ * Directive taken from angular_experiments package
+ * https://github.com/andreev-artem/angular_experiments
+ */
+
 angular.module('ngExperiments')
   .directive('ngIf', function() {
     return {

@@ -2,7 +2,8 @@
 .tz-slider .slider-handle.bottom {
 	height: 5px;
 	width: 100%;
-	background-color : #4a757d
+	background-color : #4a757d;
+	z-index: 2;
 }
 
 .tz-slider .range {

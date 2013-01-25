@@ -39,7 +39,8 @@ body {
 }
 
 .slider-container {
-	background: url(/images/crossBG2.png) left top repeat transparent;
+	/*background: url(/images/crossBG2.png) left top repeat transparent;*/
+	background-color: #999;
 	height: 80%;
 	border-right: 1px dotted #4a757d;
 	position: relative;
@@ -82,4 +83,24 @@ body {
 	font-size: 12px;
 	line-height: 100%;
 	color: #4a757d;
+}
+
+.all-range-wrapper {
+	width: 100%;
+	height: 80%;
+	margin-top: 10%;
+	position: absolute;
+}
+
+.all-range {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	background-color: #31c8e3;
+	border-top: 1px solid #4a757d;
+	border-bottom: 1px solid #4a757d;
+	padding: 0;
+	margin: 0;
+	opacity: 0.3;
+	z-index: 1;
 }

@@ -1,30 +1,12 @@
 angular.module('InTheZone')
-	.controller('MainCtrl', function($scope){
-		
-		$scope.timeZones = [
-			{
-				"utcOffset" : -11,
-				"active" : false,
-				"current" : false,
-				"timeFormat" : "24h"			
-			},
-			{
-				"utcOffset" : -10,
-				"active" : false,
-				"current" : true,
-				"timeFormat" : "12h"
-			},
-			{
-				"utcOffset" : -9,
-				"active" : false,
-				"current" : false,
-				"timeFormat" : "24h"
-			}
+	.controller('MainCtrl', ["$scope", "timeZonesService", function($scope, timeZonesService){
 
-		];
+		$scope.timeZones = timeZonesService.getTimeZones();
 
 		$scope.range = {
 			"topValue" : 12,
-			"bottomValue" : 35
+			"bottomValue" : 35,
+			"topPx" : 0,
+			"bottomPx" : 0
 		};
-	});
+	}]);

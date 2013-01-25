@@ -10,26 +10,51 @@
   <body ng-controller="MainCtrl">
     
     <div class="columns">
+      <div class="all-range-wrapper">
+        <div 
+          class="all-range"
+          ng-style='{
+            top : range.topPx + "px",
+            bottom : range.bottomPx + "px"}'>
+        </div>
+      </div>
       <div class="column" ng-repeat="timeZone in timeZones" style="width:{{100 / timeZones.length}}% ">
         <div class="chooser">
           <div class="offset-label" >{{timeZone.utcOffset}}</div> 
-          <input class="chooser-check" type="checkbox" ng-model='timeZone.active' />
+          <input 
+            class="chooser-check" 
+            type="checkbox" 
+            ng-model='timeZone.active' 
+            ng-disabled="timeZone.current"/>
         </div>
 
-        <div class="slider-container" ng-class='timeZone.active|toggleClass:"active"'>
-          <div class="time-slides-tooltips top" ng-show="timeZone.active">
+        <div 
+          class="slider-container" 
+          ng-class='(timeZone.active || timeZone.current)|toggleClass:"active"'>
+          
+          <div 
+            class='time-slides-tooltips top'
+            ng-show='timeZone.active || timeZone.current'
+            ng-style='{top : $parent.range.topPx + 5 + "px"}'>
             {{(range.topValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
-          <div class="time-slides-tooltips bottom" ng-show="timeZone.active">
+          
+          <div 
+            class='time-slides-tooltips bottom'
+            ng-show='timeZone.active || timeZone.current'
+            ng-style='{bottom: $parent.range.bottomPx + 5 + "px"}'>
             {{(range.bottomValue + timeZone.utcOffset * 2) | value48ToTime : timeZone.timeFormat}}
           </div>
+          
           <v-range-slider 
-            ng-if="timeZone.active"
+            ng-if="timeZone.current"
             min='0'
             max='48'
             top-value='$parent.range.topValue' 
             bottom-value='$parent.range.bottomValue' 
-            class='tz-slider' >
+            class='tz-slider' 
+            top-px='$parent.range.topPx'
+            bottom-px='$parent.range.bottomPx'>
 
           </v-range-slider>
         </div>
@@ -53,6 +78,7 @@
     <span ng-bind="bottomVal"></span>
     <input ng-model="bottomVal">
     -->
+
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
@@ -60,6 +86,7 @@
     <script src="scripts/directives/ngIf.js"></script>
     <script src="scripts/filters/toggleClass.js"></script>
     <script src="scripts/filters/value48ToTime.js"></script>
+    <script src="scripts/services/timeZonesService.js"></script>
 
   </body>
 </html>

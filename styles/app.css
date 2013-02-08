@@ -39,8 +39,7 @@ body {
 }
 
 .slider-container {
-	/*background: url(/images/crossBG2.png) left top repeat transparent;*/
-	background-color: #999;
+	background: url(/images/crossBG2.png) left top repeat transparent;
 	height: 80%;
 	border-right: 1px dotted #4a757d;
 	position: relative;

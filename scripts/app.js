@@ -6,6 +6,7 @@
 angular.module('VerticalRangeSlider', []);
 angular.module('TimeFormatsModule', []);
 angular.module('ngExperiments', []);
+angular.module('geolocationService', []);
 
 /**
  * Register "In the Zone" main application module
@@ -13,5 +14,6 @@ angular.module('ngExperiments', []);
 angular.module('InTheZone', [
 		'VerticalRangeSlider'
 	, 'TimeFormatsModule'
-	, 'ngExperiments'
+	, 'ngExperiments',
+	, 'geolocationService'
 ]);

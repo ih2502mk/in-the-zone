@@ -3,7 +3,7 @@ angular.module('InTheZone')
 		var timeZones = [];
 
 
-		for (var i = -11; i <= 1; i++) {
+		for (var i = -11; i <= 12; i++) {
 			timeZones[timeZones.length] = {
 				"utcOffset" : i,
 				"active" : false,

@@ -1,15 +1,21 @@
 angular.module('InTheZone')
-	.controller('MainCtrl', [
-		  '$scope'
-		, 'timeZonesService'
-		, 'geolocationService' 
-		,  function($scope, timeZonesService, geolocationService){
+.controller('MainCtrl', ['$scope'
+	, 'timeZonesService'
+	, 'geolocationService'
+	, 'geonamesTimezoneService' 
+	, function($scope, timeZonesService, 
+			geolocationService, geonamesTimezoneService){
 
 		$scope.timeZones = timeZonesService.getTimeZones();
 
 		geolocationService.getCurrentPosition(function(err, position) {
 			if(!err) {
 				console.log(position);
+				geonamesTimezoneService.getTimezone(position.lat, position.lng, function(err, data){
+					console.log(data);
+
+					$scope.timeZones[timeZonesService.gmtZeroIndex + data]["current"] = true;
+				});
 			}
 		});
 
@@ -19,4 +25,5 @@ angular.module('InTheZone')
 			"topPx" : 0,
 			"bottomPx" : 0
 		};
-	}]);
+	}
+]);

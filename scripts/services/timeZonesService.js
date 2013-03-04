@@ -1,6 +1,7 @@
 angular.module('InTheZone')
 	.service("timeZonesService", function(){
-		var timeZones = [];
+		var timeZones = []
+			,	gmtZeroIndex = 12;
 
 
 		for (var i = -11; i <= 12; i++) {
@@ -10,13 +11,14 @@ angular.module('InTheZone')
 				"current" : false,
 				"timeFormat" : "24h"					
 			}
-		}
 
-		timeZones[3]["current"] = true;
+			if(i === 0) {gmtZeroIndex = timeZones.length - 1;}
+		}
 
 		return {
 			getTimeZones: function(){
 				return timeZones;
-			}
+			},
+			gmtZeroIndex: gmtZeroIndex
 		}
 	});

@@ -6,7 +6,10 @@ angular.module('InTheZone')
 				if($window.navigator.geolocation) {
 		      $window.navigator.geolocation.getCurrentPosition(
 		      	function(position) {
-		        	cb(false, position);
+		        	cb(false, {
+		        		lat: position.coords.latitude,
+		        		lng: position.coords.longitude
+		        	});
 		      	}, 
 		      	function() {
 		      		cb(true);

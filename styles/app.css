@@ -41,12 +41,12 @@ body {
 .slider-container {
 	background: url(/images/crossBG2.png) left top repeat transparent;
 	height: 80%;
-	border-right: 1px dotted #4a757d;
+	border-left: 1px dotted #4a757d;
 	position: relative;
 }
 
-.column:first-child .slider-container {
-	border-left: 1px dotted #4a757d;
+.column:last-child .slider-container {
+	border-right: 1px dotted #4a757d;
 }
 
 .slider-container.active {

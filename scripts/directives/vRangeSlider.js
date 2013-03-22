@@ -1,5 +1,5 @@
 angular.module('VerticalRangeSlider')
-	.directive('vRangeSlider', function factory($document){
+	.directive('vRangeSlider', function factory($document, $window){
 		var disableUserSelect = function() {
 			$document[0].body.style.webkitUserSelect = "none";
 			$document[0].body.style.MozUserSelect = "none";
@@ -66,8 +66,7 @@ angular.module('VerticalRangeSlider')
 						, topHandleHeight = topHandle[0].clientHeight
 						, bottomHandleHeight = bottomHandle[0].clientHeight
 
-						, elementHeight = element[0].clientHeight
-						, pxStep = elementHeight / (attrs.max - attrs.min);					
+						, elementHeight = element[0].clientHeight;
 					
 					topHandle.css({"top" : 0});
 					
@@ -75,6 +74,8 @@ angular.module('VerticalRangeSlider')
 
 					attrs.min = parseInt(attrs.min) || 0;
 					attrs.max = parseInt(attrs.max) || elementHeight;
+
+					var pxStep = elementHeight / (attrs.max - attrs.min);
 
 					scope.topValue = scope.topValue || attrs.min;
 					scope.bottomValue = scope.bottomValue || attrs.max;
@@ -91,6 +92,12 @@ angular.module('VerticalRangeSlider')
 						, bottomCurrentY = bottomHandle[0].offsetTop || 0
 						, bottomOldY = 0
 						;
+
+					angular.element($window).bind('resize', function(){
+						elementHeight = element[0].clientHeight;
+						pxStep = elementHeight / (attrs.max - attrs.min);
+						scope.$apply();
+					});
 
 					topHandle.bind('mousedown', function(event){
 

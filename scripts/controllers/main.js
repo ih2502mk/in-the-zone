@@ -4,16 +4,15 @@ angular.module('InTheZone')
 	, 'geolocationService'
 	, 'geonamesTimezoneService' 
 	, function($scope, timeZonesService, 
-			geolocationService, geonamesTimezoneService){
+			geolocationService, geonamesTimezoneService) {
 
 		$scope.timeZones = timeZonesService.getTimeZones();
 
 		geolocationService.getCurrentPosition(function(err, position) {
-			if(!err) {
-				console.log(position);
-				geonamesTimezoneService.getTimezone(position.lat, position.lng, function(err, data){
-					console.log(data);
-
+			if(!err) {				
+				geonamesTimezoneService
+					.getTimezone(position.lat, position.lng, function(err, data){
+					
 					$scope.timeZones[timeZonesService.gmtZeroIndex + data]["current"] = true;
 				});
 			}

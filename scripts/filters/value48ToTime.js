@@ -10,7 +10,7 @@ angular.module("TimeFormatsModule", [])
 	      , a = "";
 	    
 	    hrs = (hrs < 0) ? 24 + hrs : hrs;
-	    hrs = (hrs > 24) ? hrs - 24 : hrs;
+	    hrs = (hrs >= 24) ? hrs - 24 : hrs;
 
 	    if (format === "12h") {
 	    	if (hrs > 12 ) {
